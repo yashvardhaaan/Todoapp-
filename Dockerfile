@@ -1,14 +1,10 @@
-# Use a base image with Java runtime
-FROM eclipse-temurin:17-jdk-alpine
-
-# Set the working directory in the container
+# Stage 1: Build
+FROM maven:3.8.5-openjdk-17 as builder
+COPY . /app
 WORKDIR /app
+RUN mvn clean package -DskipTests
 
-# Copy the built JAR file into the container
-COPY target/*.jar app.jar
-
-# Expose the port your app runs on (default for Spring Boot is 8080)
-EXPOSE 8080
-
-# Command to run the JAR
+# Stage 2: Run
+FROM openjdk:17
+COPY --from=builder /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
