@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: yash-todoapp
+    env: docker
+    plan: free
+    buildCommand: ./mvnw clean package -DskipTests
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    region: oregon
