@@ -8,3 +8,5 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17
 COPY --from=builder /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
+EXPOSE 10000
+CMD ["java", "-jar", "your-app.jar"]
